@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Scores } from '../../models/Scores';
+import { Scores, Board } from '../../models/Scores';
 import data from '../../../assets/data/data.json'
+import {returnData, editDataUI} from '../../../assets/utils/editScoreFunctions'
 
 @Component({
   selector: 'app-score-table',
@@ -9,49 +10,45 @@ import data from '../../../assets/data/data.json'
 })
 
 export class ScoreTableComponent implements OnInit {
-  playersScores: Scores[];
-  editedScores: (number|string)[][];
+  playersScores: any;
+  editedScores: (number|string)[];
+  scoresArrays: number[][];
+  finalPoints: number[];
+  UI;
   constructor() { 
-    this.playersScores = [];
-    this.editedScores = []
+    this.editedScores = [];
+    this.scoresArrays = [];
+    this.finalPoints = [];
   }
-
   
   ngOnInit(): void {
-    this.returnData();
-    this.editData();
-    console.log(this.editedScores);
+    this.playersScores = returnData(data, Scores);
+    this.UI = editDataUI(this.playersScores, this.editedScores, Board);
+    console.log(this.UI);
   }
-  
-  returnData() {
-    let newScores = Object.assign(new Scores(), data)
-    return newScores;
-  }
-  // UI
-  editData() {
-    (this.returnData()['Krzysztof Król']).map((elent, index, array) => 
-    { 
-      let firstThrow: number | string = array[index];
-      let secondThrow: number | string = array[index + 1];
-      let extraThrow: number | string = array[index + 2];
-      if (index%2==0 && index < 20) {
-        if ((+firstThrow + +secondThrow) == 10 ) {
-          if (firstThrow == 10) {
-            firstThrow = "X";
-            secondThrow = " "
-          } 
-          if (secondThrow == 10) {
-            secondThrow = "/"
+
+  countPoints(){
+    this.scoresArrays.map((element, index, array) =>
+      {
+        const firstThrow = element[0];
+        const secondThrow = element[1];
+        let roundSum = firstThrow + secondThrow;
+        if (index < array.length)
+        {
+          if (roundSum === 10) {
+          if (firstThrow === 10) {
+            roundSum += array[index+1][0] + array[index+1][1];
+            return this.finalPoints.push(roundSum);
           } else {
-            secondThrow = "/"
-          }
-          if (index===18) {
-            return this.editedScores.push([firstThrow, secondThrow, extraThrow])
+            roundSum += array[index+1][0];
+            return this.finalPoints.push(roundSum);
+          }}
+          if (roundSum < 10) {
+            return this.finalPoints.push(roundSum);
           }
         }
-        return this.editedScores.push([firstThrow, secondThrow])
       }
-    })
-  }  
-
+    )
+  }
+  
 }
