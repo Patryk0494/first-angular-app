@@ -5,5 +5,7 @@ export class Scores {
 export class Board {
     player: string;
     scoresUI: (number | string)[][];
-    scores: number[];
+    scores: number[][];
+    roundPoints: number[]
+    finalPoints: number;
 }

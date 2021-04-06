@@ -1,7 +1,9 @@
-<ul *ngFor='let item of editedScores'>
-    <li>{{item}}</li>
+<ul *ngFor='let item of UI'>
+    <li>{{item.player}}</li>
+    <ul *ngFor= 'let element of item.scores'>
+        <li>{{element}}</li>
+    </ul>
 </ul>
-<ul *ngFor='let item of finalPoints'>
-    <li>{{item}}</li>
-</ul>
+
+
 
