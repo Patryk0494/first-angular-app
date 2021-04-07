@@ -11,4 +11,4 @@ Pleas add your data in file 'data.json' located in 'src/assets/data'. Format of 
     }
 Next players have to be separated by a comma after square bracket.
 
-Example of insert data: './example.png'
+Example of insert data: ![example](https://user-images.githubusercontent.com/74532122/113854373-1736e580-979f-11eb-8783-ec7d48f8a8e9.png)
