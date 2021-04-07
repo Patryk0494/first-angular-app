@@ -8,9 +8,5 @@ import data from '../assets/data/data.json'
 })
 
 export class AppComponent {
-  title = 'app Component'
-  text = 'angular app';
-  inputText(e: any) {
-    return this.text = e.target.value
-  }
+  
 }

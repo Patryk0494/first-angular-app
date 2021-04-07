@@ -1,0 +1,63 @@
+$backroundColor: rgba(20, 20, 255, .9)
+$backroundColorSecond: rgba(20, 130, 255, 0.9)
+$fontColor: rgba(255, 241, 51, 0.9)
+$lineColor: rgb(178, 218, 4)
+$borderStyle: 1px solid $lineColor
+    
+.score-table
+    &__container 
+        width: 90%
+        margin: 40px auto
+        background-color: $backroundColor
+        color: $fontColor
+        display: flex
+        flex-direction: column
+        align-items: center
+    &__header-row
+        width: 100%
+        display: grid
+        grid-template-columns: 4fr repeat(11, 1fr)
+        font-size: 20px
+        font-weight: 600
+        text-align: center
+        border-right: $borderStyle
+        border-top: $borderStyle
+        > div
+            border-left: $borderStyle
+            border-bottom: $borderStyle
+            padding: 10px 0
+    &__player-row
+        width: 100%
+        display: grid
+        grid-template-columns: 4fr 10fr 1fr
+        border: $borderStyle
+    &__player-row:nth-of-type(2n)
+        background-color: $backroundColorSecond
+    &__player-name
+        padding: 0 10px
+        text-transform: uppercase
+    &__scores
+        display: grid
+        grid-template-rows: 50% 50%
+        font-size: 16px
+        font-weight: 600
+    &__round-scores, &__sumup-scores
+        display: grid
+        grid-template-columns: repeat(10, 1fr)
+        align-items: center
+        > div
+            height: 100%
+            padding: 5px 0
+            border-left: $borderStyle
+            text-align: center
+    &__round-scores > div
+        border-bottom: $borderStyle
+    &__round-scores-wrapper
+        display: flex
+        justify-content: space-evenly
+    &__final-score
+        font-size: 32px
+        display: flex
+        align-items: center
+        justify-content: center
+        border-left: $borderStyle
