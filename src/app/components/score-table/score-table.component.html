@@ -2,23 +2,18 @@
 <div class="score-table__container">
     <div class="score-table__header-row">
         <div></div>
-        <div>1</div>
-        <div>2</div>
-        <div>3</div>
-        <div>4</div>
-        <div>5</div>
-        <div>6</div>
-        <div>7</div>
-        <div>8</div>
-        <div>9</div>
-        <div>10</div>
+        <div *ngFor='let round of roundArray'>{{round}}</div>
         <div>Total</div>
     </div>
     <div class="score-table__player-row" *ngFor='let item of UI'>
         <h2 class="score-table__player-name">{{ item.player }}</h2>
         <div class="score-table__scores">
             <div class="score-table__round-scores" >
-                <div class="score-table__round-scores-wrapper" *ngFor='let element of item.scoresUI'><div>{{ element[0] }}</div><div *ngIf='element[0]!=="X"'>{{ element[1] }}</div><div *ngIf='element.length>2'>{{ element[2] }}</div></div>
+                <div class="score-table__round-scores-wrapper" *ngFor='let element of item.scoresUI'>
+                    <div>{{ element[0] }}</div>
+                    <div *ngIf='element[0]!=="X"'>{{ element[1] }}</div>
+                    <div *ngIf='element.length>2'>{{ element[2] }}</div>
+                </div>
             </div>
             <div class="score-table__sumup-scores" >
                 <div *ngFor='let element of item.roundPoints'>{{ element }}</div>
