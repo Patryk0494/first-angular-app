@@ -3,7 +3,7 @@ export function returnData(data, scores) {
     return newScores;
 }
 
-export function editData(playersScores, editedScores, Board) {
+export function editData(playersScores: number[], editedScores:(number|string)[], Board) {
     let keys: string[] = Object.keys(playersScores);
     const boardsArray: typeof Board[] = [];
     keys.map((player: string) => {
@@ -19,12 +19,49 @@ export function editData(playersScores, editedScores, Board) {
     return boardsArray;
 }
 
-function getUIScoresArray(playerScoreList, editedScores) {
+function getUIScoresArray(userAddedScores, editedScores) {
+    let addedScoresModified: (number | string)[] = userAddedScores;
     editedScores = [];
-    playerScoreList.map((element, index, array) => { 
-        let firstThrow: number | string = array[index];
+    let lastIndex = userAddedScores.length
+    console.log(addedScoresModified);
+
+    userAddedScores.map((element: number, index: number, array: number[]) => { 
+        if (element === 10) {
+            if ( array[lastIndex - 1] === 10 && array[lastIndex - 2] === 10) {
+                if (array[index - 1] !== 0 && index < lastIndex - 2 && index !== 0) {
+                    addedScoresModified.splice(index, 0, ' ')
+                    lastIndex++;
+                }
+                if (index === 0) {
+                    addedScoresModified.splice(index, 0, ' ')
+                    lastIndex++;
+                }
+            }
+            else if (array[index - 1] !== 0 || index === 0) {
+                addedScoresModified.splice(index, 0, '')
+                lastIndex++;
+            }
+        }                
+        console.log(addedScoresModified)
+
+        // if (array[index] + array[index+1] <= 10) {
+        //     editedScores.push(array[index], array[index + 1])
+        // }
+    });
+
+    // const userAddedScoresOnlyNumber = userAddedScores.map(element => {
+    //     if (element === "") {
+    //         element = 0
+    //     }
+    //     return element
+    // })
+    
+    userAddedScores.map((element, index, array) => {
+
+        let firstThrow: number | string = array[index]
         let secondThrow: number | string = array[index + 1];
         let extraThrow: number | string = array[index + 2];
+
         if (index%2 === 0 && index < 20) {
             if ((+firstThrow + +secondThrow) !== 10) {
                 editedScores.push([firstThrow, secondThrow])
@@ -42,7 +79,7 @@ function getUIScoresArray(playerScoreList, editedScores) {
                     editedScores.push([firstThrow, secondThrow])
                 }
             } 
-        }  
+        }    
     })
     return editedScores;
 }
@@ -63,39 +100,47 @@ function getScoresArrays(playerScores){
 }
 
 function countPoints(scores){
-    const roundPoints: number[] = [];
-    scores.map((element, index, array) => {
+    const framePoints: number[] = [];
+
+    const scoresNumber = scores.map(element => {
+        if (element ==="") {
+            element = 0;
+        } 
+        return element;
+    });
+
+    scoresNumber.map((element, index, array) => {
         const firstThrow = element[0];
         const secondThrow = element[1];
-        let roundSum = firstThrow + secondThrow;
+        let frameSum = firstThrow + secondThrow;
         if (index < array.length-1) {
-            if (roundSum === 10) {
+            if (frameSum === 10) {
                 if (firstThrow === 10) {
-                    roundSum += array[index+1][0] + array[index+1][1];
-                    return roundPoints.push(roundSum);
+                    frameSum += array[index+1][0] + array[index+1][1];
+                    return framePoints.push(frameSum);
                 } else {
-                    roundSum += array[index+1][0];
-                    return roundPoints.push(roundSum);
+                    frameSum += array[index+1][0];
+                    return framePoints.push(frameSum);
                 }
             }
-            if (roundSum < 10) {
-                return roundPoints.push(roundSum);
+            if (frameSum < 10) {
+                return framePoints.push(frameSum);
             }
         } 
-        if (index === array.length - 1 ) {
-            if ( roundSum === 10) {
-                roundSum += array[index][2];
-                return roundPoints.push(roundSum);
+        if (index === array.length - 1) {
+            if ( frameSum === 10) {
+                frameSum += array[index][2];
+                return framePoints.push(frameSum);
             } else {
-                return roundPoints.push(roundSum);
+                return framePoints.push(frameSum);
             }
         }
     })
-    return roundPoints;
+    return framePoints;
 }
 
-function sumUpPoints(playerRoundPoints) {
-    return playerRoundPoints.reduce((a, b) => {
+function sumUpPoints(playerFramePoints) {
+    return playerFramePoints.reduce((a, b) => {
         return a+b;
     })
 }
