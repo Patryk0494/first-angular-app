@@ -6,6 +6,6 @@ export class Board {
     player: string;
     scoresUI: (number | string)[][];
     scores: number[][];
-    roundPoints: number[]
+    framePoints: number[]
     finalPoints: number;
 }

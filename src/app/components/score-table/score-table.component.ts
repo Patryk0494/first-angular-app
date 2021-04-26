@@ -11,7 +11,7 @@ import {returnData, editData} from '../../../assets/utils/editScoreFunctions'
 
 export class ScoreTableComponent implements OnInit {
   playersScores: number[];
-  editedScores: (number|string)[];
+  editedScores: (number|string)[][];
   UI: Board[];
   roundArray: number[] = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
